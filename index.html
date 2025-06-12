@@ -1,0 +1,707 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shoppy Leipzig - Quick Night Delivery</title>
+    
+    <!-- React and ReactDOM from CDN -->
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Firebase -->
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
+    
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="Shoppy Leipzig - Quick night delivery service bringing essentials to your door in 30-45 minutes. Energy drinks, snacks, cigarettes, and more!">
+    <meta name="keywords" content="Leipzig delivery, night delivery, quick delivery, energy drinks, snacks, cigarettes, essentials">
+    <meta name="author" content="Shoppy Leipzig">
+    
+    <!-- Open Graph Meta Tags -->
+    <meta property="og:title" content="Shoppy Leipzig - Quick Night Delivery">
+    <meta property="og:description" content="Get essentials delivered to your door in 30-45 minutes. Available 8 PM - 2 AM daily.">
+    <meta property="og:type" content="website">
+    
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="/manifest.json">
+    
+    <!-- Favicon -->
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🛒</text></svg>">
+    
+    <style>
+        .gradient-bg {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        .glass-effect {
+            backdrop-filter: blur(10px);
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        .animate-float {
+            animation: float 3s ease-in-out infinite;
+        }
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+        .product-card {
+            transition: all 0.3s ease;
+            transform: perspective(1000px) rotateX(0deg);
+        }
+        .product-card:hover {
+            transform: perspective(1000px) rotateX(5deg) translateY(-10px);
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.2);
+        }
+        .cart-bounce {
+            animation: cartBounce 0.3s ease;
+        }
+        @keyframes cartBounce {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+    </style>
+</head>
+<body class="bg-gray-900 text-white min-h-screen">
+    <div id="root"></div>
+
+    <script>
+        // Configuration - Your actual credentials
+        const CONFIG = {
+            firebase: {
+                apiKey: "AIzaSyCDtWGCNrXBgBK3FzIqYnkRDc5lSOA3GD4",
+                authDomain: "shoppy-ce8a1.firebaseapp.com",
+                databaseURL: "https://shoppy-ce8a1-default-rtdb.europe-west1.firebasedatabase.app/",
+                projectId: "shoppy-ce8a1",
+                storageBucket: "shoppy-ce8a1.firebasestorage.app",
+                messagingSenderId: "144208503079",
+                appId: "1:144208503079:web:69500aaaf4d57922b04902"
+            },
+            api: {
+                baseUrl: window.location.hostname === 'localhost' 
+                    ? "http://localhost:5000" 
+                    : "https://shoppy-backend-production.up.railway.app"
+            },
+            telegram: {
+                botToken: "7624983077:AAH34Wen_mqWVfg-AZoQYeGPwVW3N-efkOM",
+                chatId: "5824096585"
+            }
+        };
+
+        // Initialize Firebase
+        let database = null;
+        try {
+            firebase.initializeApp(CONFIG.firebase);
+            database = firebase.database();
+            console.log("✅ Firebase initialized successfully");
+        } catch (error) {
+            console.log('⚠️ Firebase demo mode - using localStorage');
+        }
+
+        // Products data
+        const PRODUCTS = [
+            {
+                id: 1,
+                name: "Energy Drinks",
+                price: 2.50,
+                image: "https://images.unsplash.com/photo-1622483767028-3f66f32aef97?w=300&h=300&fit=crop",
+                category: "Beverages",
+                description: "Red Bull, Monster, and other energy drinks",
+                stock: 50
+            },
+            {
+                id: 2,
+                name: "Cigarettes",
+                price: 7.00,
+                image: "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=300&h=300&fit=crop",
+                category: "Tobacco",
+                description: "Various cigarette brands",
+                stock: 30
+            },
+            {
+                id: 3,
+                name: "Snacks & Chips",
+                price: 1.80,
+                image: "https://images.unsplash.com/photo-1566478989037-eec170784d0b?w=300&h=300&fit=crop",
+                category: "Snacks",
+                description: "Pringles, Doritos, and local snacks",
+                stock: 100
+            },
+            {
+                id: 4,
+                name: "Soft Drinks",
+                price: 1.50,
+                image: "https://images.unsplash.com/photo-1581636625402-29b2a704ef13?w=300&h=300&fit=crop",
+                category: "Beverages",
+                description: "Coca-Cola, Pepsi, Sprite, and more",
+                stock: 80
+            },
+            {
+                id: 5,
+                name: "Beer",
+                price: 3.20,
+                image: "https://images.unsplash.com/photo-1608270586620-248524c67de9?w=300&h=300&fit=crop",
+                category: "Alcohol",
+                description: "Local German beers and international brands",
+                stock: 60
+            },
+            {
+                id: 6,
+                name: "Candy & Sweets",
+                price: 2.00,
+                image: "https://images.unsplash.com/photo-1579952363873-27d3bfad9c0d?w=300&h=300&fit=crop",
+                category: "Sweets",
+                description: "Haribo, chocolate bars, and gummy bears",
+                stock: 75
+            },
+            {
+                id: 7,
+                name: "Ice Cream",
+                price: 3.50,
+                image: "https://images.unsplash.com/photo-1567206563064-6f60f40a2b57?w=300&h=300&fit=crop",
+                category: "Frozen",
+                description: "Ben & Jerry's, Häagen-Dazs, and local favorites",
+                stock: 25
+            },
+            {
+                id: 8,
+                name: "Phone Chargers",
+                price: 12.00,
+                image: "https://images.unsplash.com/photo-1583394838336-acd977736f90?w=300&h=300&fit=crop",
+                category: "Electronics",
+                description: "USB-C, Lightning, and Micro-USB chargers",
+                stock: 15
+            },
+            {
+                id: 9,
+                name: "Basic Medicines",
+                price: 8.50,
+                image: "https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=300&h=300&fit=crop",
+                category: "Health",
+                description: "Aspirin, band-aids, and basic first aid",
+                stock: 40
+            }
+        ];
+
+        // API Service with improved Telegram bot testing
+        class ApiService {
+            constructor() {
+                this.baseUrl = CONFIG.api.baseUrl;
+            }
+
+            async getProducts() {
+                try {
+                    const response = await fetch(`${this.baseUrl}/api/products`);
+                    if (response.ok) {
+                        return await response.json();
+                    }
+                } catch (error) {
+                    console.log('Using fallback products');
+                }
+                return PRODUCTS;
+            }
+
+            async createOrder(orderData) {
+                try {
+                    const orderId = Date.now().toString();
+                    const order = {
+                        id: orderId,
+                        ...orderData,
+                        status: 'pending',
+                        createdAt: new Date().toISOString(),
+                        updatedAt: new Date().toISOString()
+                    };
+
+                    // Always try Firebase first
+                    if (database) {
+                        try {
+                            const ordersRef = database.ref('orders');
+                            await ordersRef.child(orderId).set(order);
+                            console.log('✅ Order saved to Firebase:', orderId);
+                        } catch (firebaseError) {
+                            console.log('⚠️ Firebase save failed, using localStorage:', firebaseError);
+                            this.saveToLocalStorage(order);
+                        }
+                    } else {
+                        this.saveToLocalStorage(order);
+                    }
+
+                    // Send Telegram notification with better error handling
+                    const telegramSent = await this.sendTelegramNotification(order);
+                    
+                    return { 
+                        success: true, 
+                        orderId, 
+                        status: 'pending',
+                        telegramSent 
+                    };
+                } catch (error) {
+                    console.error('Order creation failed:', error);
+                    return { success: false, error: error.message };
+                }
+            }
+
+            saveToLocalStorage(order) {
+                const orders = JSON.parse(localStorage.getItem('shoppy_orders') || '[]');
+                orders.push(order);
+                localStorage.setItem('shoppy_orders', JSON.stringify(orders));
+                console.log('💾 Order saved to localStorage:', order.id);
+            }
+
+            async sendTelegramNotification(order) {
+                const items_text = order.items.map(item => 
+                    `• ${item.name} x${item.quantity} - €${(item.price * item.quantity).toFixed(2)}`
+                ).join('\n');
+                
+                const total_with_delivery = order.total + (order.deliveryFee || 2.50);
+                
+                const message = `🛒 <b>NEW ORDER #${order.id}</b>
+📍 <b>Shoppy Leipzig</b>
+
+👤 <b>Customer:</b> ${order.customerInfo.name}
+📞 <b>Phone:</b> ${order.customerInfo.phone}
+📍 <b>Address:</b> ${order.customerInfo.address}
+
+📦 <b>Items:</b>
+${items_text}
+
+💰 <b>Subtotal:</b> €${order.total.toFixed(2)}
+🚚 <b>Delivery:</b> €${(order.deliveryFee || 2.50).toFixed(2)}
+💳 <b>Payment:</b> ${order.paymentMethod === 'cash' ? 'Cash on Delivery' : 'Card'}
+<b>💵 TOTAL: €${total_with_delivery.toFixed(2)}</b>
+
+🕐 <b>Time:</b> ${new Date().toLocaleTimeString()}
+📅 <b>Date:</b> ${new Date().toLocaleDateString()}${order.customerInfo.notes ? `\n\n📝 <b>Notes:</b> ${order.customerInfo.notes}` : ''}`;
+
+                console.log('📱 Sending Telegram notification...');
+                console.log('Bot Token:', CONFIG.telegram.botToken.substring(0, 10) + '...');
+                console.log('Chat ID:', CONFIG.telegram.chatId);
+                
+                try {
+                    const response = await fetch(`https://api.telegram.org/bot${CONFIG.telegram.botToken}/sendMessage`, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({
+                            chat_id: CONFIG.telegram.chatId,
+                            text: message,
+                            parse_mode: 'HTML'
+                        })
+                    });
+                    
+                    const responseData = await response.json();
+                    
+                    if (response.ok && responseData.ok) {
+                        console.log('✅ Telegram notification sent successfully!');
+                        return true;
+                    } else {
+                        console.error('❌ Telegram API error:', responseData);
+                        
+                        // Show user-friendly error
+                        if (responseData.error_code === 400) {
+                            alert('⚠️ Order placed successfully, but notification failed. Please contact us directly.');
+                        }
+                        return false;
+                    }
+                } catch (error) {
+                    console.error('❌ Telegram notification error:', error);
+                    alert('⚠️ Order placed successfully, but notification failed. Please contact us directly.');
+                    return false;
+                }
+            }
+
+            // Test Telegram bot function
+            async testTelegramBot() {
+                const testMessage = `🤖 <b>Shoppy Leipzig Bot Test</b>
+
+✅ Bot is working correctly!
+🕐 Time: ${new Date().toLocaleTimeString()}
+📅 Date: ${new Date().toLocaleDateString()}
+
+Ready to receive orders! 🛒`;
+
+                try {
+                    const response = await fetch(`https://api.telegram.org/bot${CONFIG.telegram.botToken}/sendMessage`, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({
+                            chat_id: CONFIG.telegram.chatId,
+                            text: testMessage,
+                            parse_mode: 'HTML'
+                        })
+                    });
+
+                    const responseData = await response.json();
+                    
+                    if (response.ok && responseData.ok) {
+                        console.log('✅ Telegram bot test successful!');
+                        return true;
+                    } else {
+                        console.error('❌ Telegram bot test failed:', responseData);
+                        return false;
+                    }
+                } catch (error) {
+                    console.error('❌ Telegram bot test error:', error);
+                    return false;
+                }
+            }
+        }
+
+        const apiService = new ApiService();
+
+        // Test bot on page load
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                console.log('🧪 Testing Telegram bot...');
+                apiService.testTelegramBot();
+            }, 2000);
+        });
+
+        // Cart Context
+        const CartContext = React.createContext();
+
+        function CartProvider({ children }) {
+            const [cartItems, setCartItems] = React.useState([]);
+            const [isCartOpen, setIsCartOpen] = React.useState(false);
+
+            const addToCart = (product, quantity = 1) => {
+                setCartItems(prev => {
+                    const existingItem = prev.find(item => item.id === product.id);
+                    if (existingItem) {
+                        return prev.map(item =>
+                            item.id === product.id
+                                ? { ...item, quantity: item.quantity + quantity }
+                                : item
+                        );
+                    }
+                    return [...prev, { ...product, quantity }];
+                });
+
+                const cartButton = document.querySelector('.cart-button');
+                if (cartButton) {
+                    cartButton.classList.add('cart-bounce');
+                    setTimeout(() => cartButton.classList.remove('cart-bounce'), 300);
+                }
+            };
+
+            const removeFromCart = (productId) => {
+                setCartItems(prev => prev.filter(item => item.id !== productId));
+            };
+
+            const updateQuantity = (productId, quantity) => {
+                if (quantity <= 0) {
+                    removeFromCart(productId);
+                    return;
+                }
+                setCartItems(prev =>
+                    prev.map(item =>
+                        item.id === productId ? { ...item, quantity } : item
+                    )
+                );
+            };
+
+            const clearCart = () => setCartItems([]);
+
+            const getCartTotal = () => {
+                return cartItems.reduce((total, item) => total + (item.price * item.quantity), 0);
+            };
+
+            const getCartItemsCount = () => {
+                return cartItems.reduce((count, item) => count + item.quantity, 0);
+            };
+
+            return React.createElement(CartContext.Provider, {
+                value: {
+                    cartItems, isCartOpen, setIsCartOpen, addToCart, removeFromCart,
+                    updateQuantity, clearCart, getCartTotal, getCartItemsCount
+                }
+            }, children);
+        }
+
+        // Header Component
+        function Header() {
+            const { isCartOpen, setIsCartOpen, getCartItemsCount } = React.useContext(CartContext);
+
+            return React.createElement('header', {
+                className: 'gradient-bg shadow-lg sticky top-0 z-50'
+            }, 
+                React.createElement('div', {
+                    className: 'container mx-auto px-4 py-4'
+                },
+                    React.createElement('div', {
+                        className: 'flex items-center justify-between'
+                    },
+                        React.createElement('div', {
+                            className: 'flex items-center space-x-3'
+                        },
+                            React.createElement('div', {
+                                className: 'w-10 h-10 bg-white rounded-full flex items-center justify-center animate-float'
+                            },
+                                React.createElement('i', {
+                                    className: 'fas fa-shopping-bag text-purple-600 text-xl'
+                                })
+                            ),
+                            React.createElement('div', null,
+                                React.createElement('h1', {
+                                    className: 'text-2xl font-bold text-white'
+                                }, 'Shoppy Leipzig'),
+                                React.createElement('p', {
+                                    className: 'text-purple-200 text-sm'
+                                }, 'Quick Night Delivery • 20:00-02:00')
+                            )
+                        ),
+                        React.createElement('div', {
+                            className: 'flex items-center space-x-4'
+                        },
+                            // Test Bot Button
+                            React.createElement('button', {
+                                onClick: () => apiService.testTelegramBot(),
+                                className: 'bg-green-600 hover:bg-green-700 text-white px-3 py-2 rounded-lg text-sm transition-all duration-300',
+                                title: 'Test Telegram Bot'
+                            },
+                                React.createElement('i', {
+                                    className: 'fab fa-telegram mr-1'
+                                }),
+                                'Test Bot'
+                            ),
+                            // Cart Button
+                            React.createElement('button', {
+                                onClick: () => setIsCartOpen(!isCartOpen),
+                                className: 'cart-button relative bg-white bg-opacity-20 hover:bg-opacity-30 px-4 py-2 rounded-lg transition-all duration-300 glass-effect'
+                            },
+                                React.createElement('i', {
+                                    className: 'fas fa-shopping-cart text-xl'
+                                }),
+                                getCartItemsCount() > 0 && React.createElement('span', {
+                                    className: 'absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full w-6 h-6 flex items-center justify-center animate-pulse'
+                                }, getCartItemsCount())
+                            )
+                        )
+                    )
+                )
+            );
+        }
+
+        // Simple Product Grid for demonstration
+        function ProductsGrid() {
+            const { addToCart } = React.useContext(CartContext);
+
+            return React.createElement('div', {
+                className: 'container mx-auto px-4 py-8'
+            },
+                React.createElement('div', {
+                    className: 'text-center mb-8'
+                },
+                    React.createElement('h2', {
+                        className: 'text-4xl font-bold mb-4'
+                    }, 'Quick Night Delivery'),
+                    React.createElement('p', {
+                        className: 'text-xl text-gray-300 mb-2'
+                    }, 'Get essentials delivered in 30-45 minutes'),
+                    React.createElement('p', {
+                        className: 'text-purple-400'
+                    }, '📍 Leipzig • 🕐 20:00-02:00 • 🚚 €2.50 delivery fee')
+                ),
+                React.createElement('div', {
+                    className: 'grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6'
+                },
+                    PRODUCTS.map(product =>
+                        React.createElement('div', {
+                            key: product.id,
+                            className: 'product-card bg-gray-800 rounded-xl overflow-hidden shadow-lg hover:shadow-2xl'
+                        },
+                            React.createElement('div', {
+                                className: 'relative'
+                            },
+                                React.createElement('img', {
+                                    src: product.image,
+                                    alt: product.name,
+                                    className: 'w-full h-48 object-cover',
+                                    loading: 'lazy'
+                                }),
+                                React.createElement('div', {
+                                    className: 'absolute top-2 right-2 bg-purple-600 text-white px-2 py-1 rounded-full text-xs font-bold'
+                                }, `€${product.price.toFixed(2)}`)
+                            ),
+                            React.createElement('div', {
+                                className: 'p-4'
+                            },
+                                React.createElement('span', {
+                                    className: 'text-purple-400 text-xs uppercase tracking-wide'
+                                }, product.category),
+                                React.createElement('h3', {
+                                    className: 'text-lg font-semibold mb-2'
+                                }, product.name),
+                                React.createElement('p', {
+                                    className: 'text-gray-400 text-sm mb-4'
+                                }, product.description),
+                                React.createElement('button', {
+                                    onClick: () => addToCart(product),
+                                    className: 'w-full bg-purple-600 hover:bg-purple-700 text-white py-2 px-4 rounded-lg transition-all duration-300 flex items-center justify-center'
+                                },
+                                    React.createElement('i', {
+                                        className: 'fas fa-plus mr-2'
+                                    }),
+                                    'Add to Cart'
+                                )
+                            )
+                        )
+                    )
+                )
+            );
+        }
+
+        // Simple Cart Sidebar
+        function CartSidebar() {
+            const { isCartOpen, setIsCartOpen, cartItems, getCartTotal, clearCart } = React.useContext(CartContext);
+
+            if (!isCartOpen) return null;
+
+            return React.createElement('div', {
+                className: 'fixed inset-0 bg-black bg-opacity-50 z-50 flex justify-end',
+                onClick: () => setIsCartOpen(false)
+            },
+                React.createElement('div', {
+                    className: 'w-96 bg-gray-800 h-full p-6 overflow-y-auto',
+                    onClick: (e) => e.stopPropagation()
+                },
+                    React.createElement('div', {
+                        className: 'flex justify-between items-center mb-6'
+                    },
+                        React.createElement('h2', {
+                            className: 'text-xl font-bold'
+                        }, 'Shopping Cart'),
+                        React.createElement('button', {
+                            onClick: () => setIsCartOpen(false),
+                            className: 'text-gray-400 hover:text-white'
+                        },
+                            React.createElement('i', {
+                                className: 'fas fa-times text-xl'
+                            })
+                        )
+                    ),
+                    cartItems.length === 0 
+                        ? React.createElement('p', {
+                            className: 'text-gray-400 text-center py-20'
+                        }, 'Your cart is empty')
+                        : React.createElement('div', null,
+                            React.createElement('div', {
+                                className: 'space-y-4 mb-6'
+                            },
+                                cartItems.map(item =>
+                                    React.createElement('div', {
+                                        key: item.id,
+                                        className: 'flex items-center space-x-4 bg-gray-700 p-3 rounded-lg'
+                                    },
+                                        React.createElement('img', {
+                                            src: item.image,
+                                            alt: item.name,
+                                            className: 'w-12 h-12 object-cover rounded'
+                                        }),
+                                        React.createElement('div', {
+                                            className: 'flex-1'
+                                        },
+                                            React.createElement('h4', {
+                                                className: 'font-semibold'
+                                            }, item.name),
+                                            React.createElement('p', {
+                                                className: 'text-purple-400'
+                                            }, `€${item.price.toFixed(2)} x${item.quantity}`)
+                                        )
+                                    )
+                                )
+                            ),
+                            React.createElement('div', {
+                                className: 'border-t border-gray-700 pt-4'
+                            },
+                                React.createElement('div', {
+                                    className: 'flex justify-between items-center mb-4'
+                                },
+                                    React.createElement('span', {
+                                        className: 'text-lg font-semibold'
+                                    }, 'Total:'),
+                                    React.createElement('span', {
+                                        className: 'text-2xl font-bold text-purple-400'
+                                    }, `€${getCartTotal().toFixed(2)}`)
+                                ),
+                                React.createElement('button', {
+                                    onClick: () => {
+                                        // Simple checkout - just test the order system
+                                        const testOrder = {
+                                            items: cartItems,
+                                            total: getCartTotal(),
+                                            customerInfo: {
+                                                name: 'Test Customer',
+                                                phone: '+49 123 456 789',
+                                                address: 'Test Address, Leipzig',
+                                                notes: 'Test order from website'
+                                            },
+                                            paymentMethod: 'cash',
+                                            deliveryFee: 2.50
+                                        };
+                                        
+                                        apiService.createOrder(testOrder).then(result => {
+                                            if (result.success) {
+                                                alert(`✅ Test order placed! Order ID: ${result.orderId}\n\nCheck your Telegram for notification!`);
+                                                clearCart();
+                                                setIsCartOpen(false);
+                                            } else {
+                                                alert('❌ Order failed: ' + result.error);
+                                            }
+                                        });
+                                    },
+                                    className: 'w-full bg-purple-600 hover:bg-purple-700 text-white py-3 rounded-lg transition-all duration-300 mb-2'
+                                }, 'Test Order (Demo)'),
+                                React.createElement('button', {
+                                    onClick: clearCart,
+                                    className: 'w-full bg-gray-600 hover:bg-gray-700 text-white py-2 rounded-lg transition-all duration-300'
+                                }, 'Clear Cart')
+                            )
+                        )
+                )
+            );
+        }
+
+        // Main App Component
+        function App() {
+            React.useEffect(() => {
+                console.log('🛒 Shoppy Leipzig - Quick Night Delivery');
+                console.log('📍 Service Area: Leipzig, Germany');
+                console.log('🕐 Hours: 20:00 - 02:00');
+                console.log('🚚 Delivery: 30-45 minutes');
+                
+                document.title = 'Shoppy Leipzig - Quick Night Delivery';
+            }, []);
+
+            return React.createElement(CartProvider, null,
+                React.createElement('div', {
+                    className: 'min-h-screen bg-gray-900'
+                },
+                    React.createElement(Header),
+                    React.createElement('main', {
+                        className: 'min-h-screen'
+                    },
+                        React.createElement(ProductsGrid)
+                    ),
+                    React.createElement('footer', {
+                        className: 'bg-gray-800 py-8 text-center'
+                    },
+                        React.createElement('p', {
+                            className: 'text-gray-400'
+                        }, '© 2025 Shoppy Leipzig. Made with ❤️ for Leipzig.')
+                    ),
+                    React.createElement(CartSidebar)
+                )
+            );
+        }
+
+        // Render the app
+        ReactDOM.render(React.createElement(App), document.getElementById('root'));
+    </script>
+</body>
+</html>
