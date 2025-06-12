@@ -19,6 +19,9 @@
     <!-- Font Awesome -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
     <!-- SEO Meta Tags -->
     <meta name="description" content="Shoppy Leipzig - Quick night delivery service bringing essentials to your door in 30-45 minutes. Energy drinks, snacks, cigarettes, and more!">
     <meta name="keywords" content="Leipzig delivery, night delivery, quick delivery, energy drinks, snacks, cigarettes, essentials">
@@ -36,35 +39,214 @@
     <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🛒</text></svg>">
     
     <style>
+        * {
+            font-family: 'Inter', sans-serif;
+        }
+        
         .gradient-bg {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
         }
+        
+        .gradient-modern {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+        }
+        
         .glass-effect {
-            backdrop-filter: blur(10px);
+            backdrop-filter: blur(20px);
             background: rgba(255, 255, 255, 0.1);
             border: 1px solid rgba(255, 255, 255, 0.2);
         }
+        
+        .glass-dark {
+            backdrop-filter: blur(20px);
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
         .animate-float {
-            animation: float 3s ease-in-out infinite;
+            animation: float 6s ease-in-out infinite;
         }
+        
         @keyframes float {
-            0%, 100% { transform: translateY(0px); }
-            50% { transform: translateY(-10px); }
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            33% { transform: translateY(-10px) rotate(1deg); }
+            66% { transform: translateY(5px) rotate(-1deg); }
         }
+        
         .product-card {
-            transition: all 0.3s ease;
-            transform: perspective(1000px) rotateX(0deg);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            transform: perspective(1000px) rotateX(0deg) scale(1);
         }
+        
         .product-card:hover {
-            transform: perspective(1000px) rotateX(5deg) translateY(-10px);
-            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.2);
+            transform: perspective(1000px) rotateX(5deg) scale(1.02) translateY(-10px);
+            box-shadow: 0 25px 50px rgba(102, 126, 234, 0.4), 0 15px 30px rgba(0, 0, 0, 0.3);
         }
+        
         .cart-bounce {
-            animation: cartBounce 0.3s ease;
+            animation: cartBounce 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
         }
+        
         @keyframes cartBounce {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.1); }
+            0% { transform: scale(1); }
+            25% { transform: scale(1.1) rotate(5deg); }
+            50% { transform: scale(1.05) rotate(-5deg); }
+            75% { transform: scale(1.1) rotate(2deg); }
+            100% { transform: scale(1) rotate(0deg); }
+        }
+        
+        .slide-in-right {
+            animation: slideInRight 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        @keyframes slideInRight {
+            from { transform: translateX(100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+        
+        .slide-out-right {
+            animation: slideOutRight 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        @keyframes slideOutRight {
+            from { transform: translateX(0); opacity: 1; }
+            to { transform: translateX(100%); opacity: 0; }
+        }
+        
+        .fade-in {
+            animation: fadeIn 0.5s ease-out;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .pulse-ring {
+            animation: pulseRing 2s infinite;
+        }
+        
+        @keyframes pulseRing {
+            0% { transform: scale(1); opacity: 1; }
+            100% { transform: scale(1.5); opacity: 0; }
+        }
+        
+        .loading-dots {
+            animation: loadingDots 1.5s infinite ease-in-out;
+        }
+        
+        @keyframes loadingDots {
+            0%, 20% { opacity: 0; }
+            50% { opacity: 1; }
+            80%, 100% { opacity: 0; }
+        }
+        
+        .btn-glow {
+            box-shadow: 0 0 20px rgba(102, 126, 234, 0.5);
+            transition: all 0.3s ease;
+        }
+        
+        .btn-glow:hover {
+            box-shadow: 0 0 30px rgba(102, 126, 234, 0.8);
+            transform: translateY(-2px);
+        }
+        
+        .text-gradient {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .category-pill {
+            transition: all 0.3s ease;
+        }
+        
+        .category-pill:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
+        }
+        
+        .search-glow:focus {
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.3);
+        }
+        
+        .cart-item-enter {
+            animation: cartItemEnter 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        @keyframes cartItemEnter {
+            0% { transform: scale(0.8) translateY(-20px); opacity: 0; }
+            100% { transform: scale(1) translateY(0); opacity: 1; }
+        }
+        
+        .notification-slide {
+            animation: notificationSlide 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        @keyframes notificationSlide {
+            0% { transform: translateY(-100px) scale(0.9); opacity: 0; }
+            100% { transform: translateY(0) scale(1); opacity: 1; }
+        }
+        
+        .quantity-btn {
+            transition: all 0.2s ease;
+        }
+        
+        .quantity-btn:hover {
+            transform: scale(1.1);
+            background: rgba(102, 126, 234, 0.8);
+        }
+        
+        .hero-pattern {
+            background-image: 
+                radial-gradient(circle at 25% 25%, rgba(102, 126, 234, 0.2) 0%, transparent 50%),
+                radial-gradient(circle at 75% 75%, rgba(118, 75, 162, 0.2) 0%, transparent 50%);
+        }
+        
+        .service-status-glow {
+            animation: serviceGlow 2s ease-in-out infinite alternate;
+        }
+        
+        @keyframes serviceGlow {
+            from { box-shadow: 0 0 10px rgba(34, 197, 94, 0.5); }
+            to { box-shadow: 0 0 20px rgba(34, 197, 94, 0.8); }
+        }
+        
+        .loading-spinner {
+            animation: spin 1s linear infinite;
+        }
+        
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+        
+        .hover-lift {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .hover-lift:hover {
+            transform: translateY(-4px);
+        }
+        
+        /* Custom scrollbar */
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 6px;
+        }
+        
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 3px;
+        }
+        
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: rgba(102, 126, 234, 0.5);
+            border-radius: 3px;
+        }
+        
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+            background: rgba(102, 126, 234, 0.7);
         }
     </style>
 </head>
@@ -72,7 +254,7 @@
     <div id="root"></div>
 
     <script>
-        // Configuration - Your actual credentials
+        // Configuration
         const CONFIG = {
             firebase: {
                 apiKey: "AIzaSyCDtWGCNrXBgBK3FzIqYnkRDc5lSOA3GD4",
@@ -104,92 +286,113 @@
             console.log('⚠️ Firebase demo mode - using localStorage');
         }
 
-        // Products data
+        // Enhanced Products with better images and details
         const PRODUCTS = [
             {
                 id: 1,
                 name: "Energy Drinks",
                 price: 2.50,
-                image: "https://images.unsplash.com/photo-1622483767028-3f66f32aef97?w=300&h=300&fit=crop",
+                image: "https://images.unsplash.com/photo-1622483767028-3f66f32aef97?w=400&h=400&fit=crop",
                 category: "Beverages",
-                description: "Red Bull, Monster, and other energy drinks",
-                stock: 50
+                description: "Red Bull, Monster, and premium energy drinks",
+                stock: 50,
+                popular: true,
+                rating: 4.8,
+                tags: ["caffeine", "energy", "sports"]
             },
             {
                 id: 2,
-                name: "Cigarettes",
+                name: "Premium Cigarettes",
                 price: 7.00,
-                image: "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=300&h=300&fit=crop",
+                image: "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=400&h=400&fit=crop",
                 category: "Tobacco",
-                description: "Various cigarette brands",
-                stock: 30
+                description: "Various premium cigarette brands",
+                stock: 30,
+                rating: 4.2,
+                tags: ["tobacco", "premium"]
             },
             {
                 id: 3,
-                name: "Snacks & Chips",
+                name: "Gourmet Snacks",
                 price: 1.80,
-                image: "https://images.unsplash.com/photo-1566478989037-eec170784d0b?w=300&h=300&fit=crop",
+                image: "https://images.unsplash.com/photo-1566478989037-eec170784d0b?w=400&h=400&fit=crop",
                 category: "Snacks",
-                description: "Pringles, Doritos, and local snacks",
-                stock: 100
+                description: "Pringles, Doritos, and artisan snacks",
+                stock: 100,
+                popular: true,
+                rating: 4.9,
+                tags: ["crispy", "salty", "party"]
             },
             {
                 id: 4,
-                name: "Soft Drinks",
+                name: "Craft Soft Drinks",
                 price: 1.50,
-                image: "https://images.unsplash.com/photo-1581636625402-29b2a704ef13?w=300&h=300&fit=crop",
+                image: "https://images.unsplash.com/photo-1581636625402-29b2a704ef13?w=400&h=400&fit=crop",
                 category: "Beverages",
-                description: "Coca-Cola, Pepsi, Sprite, and more",
-                stock: 80
+                description: "Coca-Cola, Pepsi, and craft sodas",
+                stock: 80,
+                rating: 4.6,
+                tags: ["refreshing", "fizzy", "classic"]
             },
             {
                 id: 5,
-                name: "Beer",
+                name: "Local Craft Beer",
                 price: 3.20,
-                image: "https://images.unsplash.com/photo-1608270586620-248524c67de9?w=300&h=300&fit=crop",
+                image: "https://images.unsplash.com/photo-1608270586620-248524c67de9?w=400&h=400&fit=crop",
                 category: "Alcohol",
-                description: "Local German beers and international brands",
-                stock: 60
+                description: "Leipzig craft beers and international favorites",
+                stock: 60,
+                popular: true,
+                rating: 4.7,
+                tags: ["craft", "local", "premium"]
             },
             {
                 id: 6,
-                name: "Candy & Sweets",
+                name: "Artisan Sweets",
                 price: 2.00,
-                image: "https://images.unsplash.com/photo-1579952363873-27d3bfad9c0d?w=300&h=300&fit=crop",
+                image: "https://images.unsplash.com/photo-1579952363873-27d3bfad9c0d?w=400&h=400&fit=crop",
                 category: "Sweets",
-                description: "Haribo, chocolate bars, and gummy bears",
-                stock: 75
+                description: "Haribo, premium chocolates, and local treats",
+                stock: 75,
+                rating: 4.8,
+                tags: ["sweet", "chocolate", "treats"]
             },
             {
                 id: 7,
-                name: "Ice Cream",
+                name: "Premium Ice Cream",
                 price: 3.50,
-                image: "https://images.unsplash.com/photo-1567206563064-6f60f40a2b57?w=300&h=300&fit=crop",
+                image: "https://images.unsplash.com/photo-1567206563064-6f60f40a2b57?w=400&h=400&fit=crop",
                 category: "Frozen",
-                description: "Ben & Jerry's, Häagen-Dazs, and local favorites",
-                stock: 25
+                description: "Ben & Jerry's, Häagen-Dazs, and local gelato",
+                stock: 25,
+                rating: 4.9,
+                tags: ["cold", "creamy", "premium"]
             },
             {
                 id: 8,
-                name: "Phone Chargers",
+                name: "Tech Essentials",
                 price: 12.00,
-                image: "https://images.unsplash.com/photo-1583394838336-acd977736f90?w=300&h=300&fit=crop",
+                image: "https://images.unsplash.com/photo-1583394838336-acd977736f90?w=400&h=400&fit=crop",
                 category: "Electronics",
-                description: "USB-C, Lightning, and Micro-USB chargers",
-                stock: 15
+                description: "USB-C, Lightning, wireless chargers",
+                stock: 15,
+                rating: 4.5,
+                tags: ["tech", "charging", "wireless"]
             },
             {
                 id: 9,
-                name: "Basic Medicines",
+                name: "Health Essentials",
                 price: 8.50,
-                image: "https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=300&h=300&fit=crop",
+                image: "https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=400&h=400&fit=crop",
                 category: "Health",
-                description: "Aspirin, band-aids, and basic first aid",
-                stock: 40
+                description: "First aid, vitamins, and wellness products",
+                stock: 40,
+                rating: 4.4,
+                tags: ["health", "wellness", "emergency"]
             }
         ];
 
-        // API Service with improved Telegram bot testing
+        // Enhanced API Service with better error handling
         class ApiService {
             constructor() {
                 this.baseUrl = CONFIG.api.baseUrl;
@@ -218,7 +421,6 @@
                         updatedAt: new Date().toISOString()
                     };
 
-                    // Always try Firebase first
                     if (database) {
                         try {
                             const ordersRef = database.ref('orders');
@@ -232,7 +434,6 @@
                         this.saveToLocalStorage(order);
                     }
 
-                    // Send Telegram notification with better error handling
                     const telegramSent = await this.sendTelegramNotification(order);
                     
                     return { 
@@ -279,10 +480,6 @@ ${items_text}
 🕐 <b>Time:</b> ${new Date().toLocaleTimeString()}
 📅 <b>Date:</b> ${new Date().toLocaleDateString()}${order.customerInfo.notes ? `\n\n📝 <b>Notes:</b> ${order.customerInfo.notes}` : ''}`;
 
-                console.log('📱 Sending Telegram notification...');
-                console.log('Bot Token:', CONFIG.telegram.botToken.substring(0, 10) + '...');
-                console.log('Chat ID:', CONFIG.telegram.chatId);
-                
                 try {
                     const response = await fetch(`https://api.telegram.org/bot${CONFIG.telegram.botToken}/sendMessage`, {
                         method: 'POST',
@@ -301,21 +498,14 @@ ${items_text}
                         return true;
                     } else {
                         console.error('❌ Telegram API error:', responseData);
-                        
-                        // Show user-friendly error
-                        if (responseData.error_code === 400) {
-                            alert('⚠️ Order placed successfully, but notification failed. Please contact us directly.');
-                        }
                         return false;
                     }
                 } catch (error) {
                     console.error('❌ Telegram notification error:', error);
-                    alert('⚠️ Order placed successfully, but notification failed. Please contact us directly.');
                     return false;
                 }
             }
 
-            // Test Telegram bot function
             async testTelegramBot() {
                 const testMessage = `🤖 <b>Shoppy Leipzig Bot Test</b>
 
@@ -354,20 +544,45 @@ Ready to receive orders! 🛒`;
 
         const apiService = new ApiService();
 
-        // Test bot on page load
-        window.addEventListener('load', () => {
+        // Notification System
+        function showNotification(message, type = 'success', duration = 3000) {
+            const notification = document.createElement('div');
+            notification.className = `fixed top-4 right-4 z-50 px-6 py-4 rounded-lg shadow-lg notification-slide ${
+                type === 'success' ? 'bg-green-600' : 
+                type === 'error' ? 'bg-red-600' : 
+                type === 'warning' ? 'bg-yellow-600' : 'bg-blue-600'
+            } text-white font-medium`;
+            
+            notification.innerHTML = `
+                <div class="flex items-center space-x-3">
+                    <i class="fas ${
+                        type === 'success' ? 'fa-check-circle' :
+                        type === 'error' ? 'fa-exclamation-circle' :
+                        type === 'warning' ? 'fa-exclamation-triangle' : 'fa-info-circle'
+                    }"></i>
+                    <span>${message}</span>
+                    <button onclick="this.parentElement.parentElement.remove()" class="text-white hover:text-gray-200">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+            `;
+            
+            document.body.appendChild(notification);
+            
             setTimeout(() => {
-                console.log('🧪 Testing Telegram bot...');
-                apiService.testTelegramBot();
-            }, 2000);
-        });
+                if (notification.parentElement) {
+                    notification.remove();
+                }
+            }, duration);
+        }
 
-        // Cart Context
+        // Cart Context with enhanced functionality
         const CartContext = React.createContext();
 
         function CartProvider({ children }) {
             const [cartItems, setCartItems] = React.useState([]);
             const [isCartOpen, setIsCartOpen] = React.useState(false);
+            const [isAnimating, setIsAnimating] = React.useState(false);
 
             const addToCart = (product, quantity = 1) => {
                 setCartItems(prev => {
@@ -382,15 +597,20 @@ Ready to receive orders! 🛒`;
                     return [...prev, { ...product, quantity }];
                 });
 
+                // Enhanced cart animation
                 const cartButton = document.querySelector('.cart-button');
                 if (cartButton) {
                     cartButton.classList.add('cart-bounce');
-                    setTimeout(() => cartButton.classList.remove('cart-bounce'), 300);
+                    setTimeout(() => cartButton.classList.remove('cart-bounce'), 600);
                 }
+
+                // Show success notification
+                showNotification(`${product.name} added to cart!`, 'success', 2000);
             };
 
             const removeFromCart = (productId) => {
                 setCartItems(prev => prev.filter(item => item.id !== productId));
+                showNotification('Item removed from cart', 'info', 2000);
             };
 
             const updateQuantity = (productId, quantity) => {
@@ -405,7 +625,10 @@ Ready to receive orders! 🛒`;
                 );
             };
 
-            const clearCart = () => setCartItems([]);
+            const clearCart = () => {
+                setCartItems([]);
+                showNotification('Cart cleared', 'info', 2000);
+            };
 
             const getCartTotal = () => {
                 return cartItems.reduce((total, item) => total + (item.price * item.quantity), 0);
@@ -415,70 +638,96 @@ Ready to receive orders! 🛒`;
                 return cartItems.reduce((count, item) => count + item.quantity, 0);
             };
 
+            const getTotalWithDelivery = () => {
+                return getCartTotal() + 2.50;
+            };
+
             return React.createElement(CartContext.Provider, {
                 value: {
                     cartItems, isCartOpen, setIsCartOpen, addToCart, removeFromCart,
-                    updateQuantity, clearCart, getCartTotal, getCartItemsCount
+                    updateQuantity, clearCart, getCartTotal, getCartItemsCount,
+                    getTotalWithDelivery, isAnimating, setIsAnimating
                 }
             }, children);
         }
 
-        // Header Component
+        // Enhanced Header Component
         function Header() {
             const { isCartOpen, setIsCartOpen, getCartItemsCount } = React.useContext(CartContext);
+            const [isTestingBot, setIsTestingBot] = React.useState(false);
+
+            const handleTestBot = async () => {
+                setIsTestingBot(true);
+                const success = await apiService.testTelegramBot();
+                setIsTestingBot(false);
+                
+                if (success) {
+                    showNotification('Bot test successful! Check your Telegram.', 'success');
+                } else {
+                    showNotification('Bot test failed. Check console for details.', 'error');
+                }
+            };
 
             return React.createElement('header', {
-                className: 'gradient-bg shadow-lg sticky top-0 z-50'
+                className: 'gradient-modern shadow-2xl sticky top-0 z-40 border-b border-white/10'
             }, 
                 React.createElement('div', {
-                    className: 'container mx-auto px-4 py-4'
+                    className: 'container mx-auto px-4 py-6'
                 },
                     React.createElement('div', {
                         className: 'flex items-center justify-between'
                     },
                         React.createElement('div', {
-                            className: 'flex items-center space-x-3'
+                            className: 'flex items-center space-x-4'
                         },
                             React.createElement('div', {
-                                className: 'w-10 h-10 bg-white rounded-full flex items-center justify-center animate-float'
+                                className: 'relative'
                             },
-                                React.createElement('i', {
-                                    className: 'fas fa-shopping-bag text-purple-600 text-xl'
+                                React.createElement('div', {
+                                    className: 'w-12 h-12 bg-white rounded-2xl flex items-center justify-center animate-float shadow-lg'
+                                },
+                                    React.createElement('i', {
+                                        className: 'fas fa-shopping-bag text-purple-600 text-xl'
+                                    })
+                                ),
+                                React.createElement('div', {
+                                    className: 'absolute -top-1 -right-1 w-6 h-6 bg-green-500 rounded-full pulse-ring opacity-75'
                                 })
                             ),
                             React.createElement('div', null,
                                 React.createElement('h1', {
-                                    className: 'text-2xl font-bold text-white'
+                                    className: 'text-3xl font-bold text-white drop-shadow-lg'
                                 }, 'Shoppy Leipzig'),
                                 React.createElement('p', {
-                                    className: 'text-purple-200 text-sm'
+                                    className: 'text-purple-100 text-sm font-medium'
                                 }, 'Quick Night Delivery • 20:00-02:00')
                             )
                         ),
                         React.createElement('div', {
-                            className: 'flex items-center space-x-4'
+                            className: 'flex items-center space-x-3'
                         },
-                            // Test Bot Button
+                            // Enhanced Test Bot Button
                             React.createElement('button', {
-                                onClick: () => apiService.testTelegramBot(),
-                                className: 'bg-green-600 hover:bg-green-700 text-white px-3 py-2 rounded-lg text-sm transition-all duration-300',
+                                onClick: handleTestBot,
+                                disabled: isTestingBot,
+                                className: `${isTestingBot ? 'bg-gray-600' : 'bg-green-600 hover:bg-green-700'} text-white px-4 py-2 rounded-xl text-sm font-medium transition-all duration-300 flex items-center space-x-2 shadow-lg hover-lift`,
                                 title: 'Test Telegram Bot'
                             },
                                 React.createElement('i', {
-                                    className: 'fab fa-telegram mr-1'
+                                    className: `${isTestingBot ? 'fas fa-spinner loading-spinner' : 'fab fa-telegram'}`
                                 }),
-                                'Test Bot'
+                                React.createElement('span', null, isTestingBot ? 'Testing...' : 'Test Bot')
                             ),
-                            // Cart Button
+                            // Enhanced Cart Button
                             React.createElement('button', {
                                 onClick: () => setIsCartOpen(!isCartOpen),
-                                className: 'cart-button relative bg-white bg-opacity-20 hover:bg-opacity-30 px-4 py-2 rounded-lg transition-all duration-300 glass-effect'
+                                className: 'cart-button relative glass-effect hover:bg-white/20 px-4 py-2 rounded-xl transition-all duration-300 shadow-lg group'
                             },
                                 React.createElement('i', {
-                                    className: 'fas fa-shopping-cart text-xl'
+                                    className: 'fas fa-shopping-cart text-xl group-hover:scale-110 transition-transform duration-300'
                                 }),
                                 getCartItemsCount() > 0 && React.createElement('span', {
-                                    className: 'absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full w-6 h-6 flex items-center justify-center animate-pulse'
+                                    className: 'absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full w-6 h-6 flex items-center justify-center animate-pulse font-bold shadow-lg'
                                 }, getCartItemsCount())
                             )
                         )
@@ -487,182 +736,1112 @@ Ready to receive orders! 🛒`;
             );
         }
 
-        // Simple Product Grid for demonstration
-        function ProductsGrid() {
-            const { addToCart } = React.useContext(CartContext);
+        // Enhanced Service Info Banner
+        function ServiceInfo() {
+            const [currentTime, setCurrentTime] = React.useState(new Date());
+
+            React.useEffect(() => {
+                const timer = setInterval(() => setCurrentTime(new Date()), 1000);
+                return () => clearInterval(timer);
+            }, []);
+
+            const isServiceHours = () => {
+                const hour = currentTime.getHours();
+                return hour >= 20 || hour < 2;
+            };
 
             return React.createElement('div', {
-                className: 'container mx-auto px-4 py-8'
+                className: `py-4 text-center text-sm font-medium transition-all duration-500 ${
+                    isServiceHours() 
+                        ? 'bg-green-600 service-status-glow' 
+                        : 'bg-red-600'
+                }`
             },
                 React.createElement('div', {
-                    className: 'text-center mb-8'
+                    className: 'container mx-auto px-4 flex items-center justify-center space-x-3'
                 },
-                    React.createElement('h2', {
-                        className: 'text-4xl font-bold mb-4'
-                    }, 'Quick Night Delivery'),
-                    React.createElement('p', {
-                        className: 'text-xl text-gray-300 mb-2'
-                    }, 'Get essentials delivered in 30-45 minutes'),
-                    React.createElement('p', {
-                        className: 'text-purple-400'
-                    }, '📍 Leipzig • 🕐 20:00-02:00 • 🚚 €2.50 delivery fee')
-                ),
+                    React.createElement('div', {
+                        className: `w-3 h-3 rounded-full ${isServiceHours() ? 'bg-green-300' : 'bg-red-300'} animate-pulse`
+                    }),
+                    React.createElement('span', null,
+                        isServiceHours() 
+                            ? `🟢 WE'RE OPEN! Fast delivery available • ${currentTime.toLocaleTimeString()}`
+                            : `🔴 CLOSED • Service hours: 20:00 - 02:00 • Next opening: Today 20:00`
+                    ),
+                    React.createElement('div', {
+                        className: `w-3 h-3 rounded-full ${isServiceHours() ? 'bg-green-300' : 'bg-red-300'} animate-pulse`
+                    })
+                )
+            );
+        }
+
+        // Enhanced Product Card Component
+        function ProductCard({ product }) {
+            const { addToCart } = React.useContext(CartContext);
+            const [isAdding, setIsAdding] = React.useState(false);
+            const [isImageLoaded, setIsImageLoaded] = React.useState(false);
+
+            const handleAddToCart = async () => {
+                setIsAdding(true);
+                await new Promise(resolve => setTimeout(resolve, 300));
+                addToCart(product);
+                setIsAdding(false);
+            };
+
+            const handleQuickBuy = () => {
+                addToCart(product);
+                // Auto-open cart for quick checkout
+                setTimeout(() => {
+                    window.dispatchEvent(new CustomEvent('openCheckout'));
+                }, 500);
+            };
+
+            return React.createElement('div', {
+                className: 'product-card bg-gray-800 rounded-2xl overflow-hidden shadow-xl hover:shadow-2xl border border-gray-700 hover:border-purple-500/50 fade-in'
+            },
                 React.createElement('div', {
-                    className: 'grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6'
+                    className: 'relative overflow-hidden'
                 },
-                    PRODUCTS.map(product =>
-                        React.createElement('div', {
-                            key: product.id,
-                            className: 'product-card bg-gray-800 rounded-xl overflow-hidden shadow-lg hover:shadow-2xl'
+                    // Loading placeholder
+                    !isImageLoaded && React.createElement('div', {
+                        className: 'w-full h-56 bg-gray-700 animate-pulse flex items-center justify-center'
+                    },
+                        React.createElement('i', {
+                            className: 'fas fa-image text-gray-500 text-3xl'
+                        })
+                    ),
+                    // Product image
+                    React.createElement('img', {
+                        src: product.image,
+                        alt: product.name,
+                        className: `w-full h-56 object-cover transition-all duration-500 ${isImageLoaded ? 'opacity-100' : 'opacity-0'}`,
+                        loading: 'lazy',
+                        onLoad: () => setIsImageLoaded(true),
+                        onError: () => setIsImageLoaded(true)
+                    }),
+                    // Price badge
+                    React.createElement('div', {
+                        className: 'absolute top-3 right-3 bg-purple-600 text-white px-3 py-1 rounded-full text-sm font-bold shadow-lg btn-glow'
+                    }, `€${product.price.toFixed(2)}`),
+                    // Popular badge
+                    product.popular && React.createElement('div', {
+                        className: 'absolute top-3 left-3 bg-gradient-to-r from-yellow-400 to-orange-500 text-white px-3 py-1 rounded-full text-xs font-bold shadow-lg'
+                    }, '🔥 Popular'),
+                    // Stock indicator
+                    React.createElement('div', {
+                        className: `absolute bottom-3 left-3 px-2 py-1 rounded-full text-xs font-medium ${
+                            product.stock > 20 ? 'bg-green-600' : 
+                            product.stock > 5 ? 'bg-yellow-600' : 'bg-red-600'
+                        } text-white shadow-lg`
+                    }, `${product.stock} left`)
+                ),
+                
+                React.createElement('div', {
+                    className: 'p-5'
+                },
+                    React.createElement('div', {
+                        className: 'mb-3'
+                    },
+                        React.createElement('span', {
+                            className: 'text-purple-400 text-xs uppercase tracking-wider font-semibold'
+                        }, product.category),
+                        product.rating && React.createElement('div', {
+                            className: 'flex items-center space-x-1 mt-1'
                         },
                             React.createElement('div', {
-                                className: 'relative'
+                                className: 'flex text-yellow-400'
                             },
-                                React.createElement('img', {
-                                    src: product.image,
-                                    alt: product.name,
-                                    className: 'w-full h-48 object-cover',
-                                    loading: 'lazy'
-                                }),
-                                React.createElement('div', {
-                                    className: 'absolute top-2 right-2 bg-purple-600 text-white px-2 py-1 rounded-full text-xs font-bold'
-                                }, `€${product.price.toFixed(2)}`)
-                            ),
-                            React.createElement('div', {
-                                className: 'p-4'
-                            },
-                                React.createElement('span', {
-                                    className: 'text-purple-400 text-xs uppercase tracking-wide'
-                                }, product.category),
-                                React.createElement('h3', {
-                                    className: 'text-lg font-semibold mb-2'
-                                }, product.name),
-                                React.createElement('p', {
-                                    className: 'text-gray-400 text-sm mb-4'
-                                }, product.description),
-                                React.createElement('button', {
-                                    onClick: () => addToCart(product),
-                                    className: 'w-full bg-purple-600 hover:bg-purple-700 text-white py-2 px-4 rounded-lg transition-all duration-300 flex items-center justify-center'
-                                },
+                                [...Array(5)].map((_, i) =>
                                     React.createElement('i', {
-                                        className: 'fas fa-plus mr-2'
-                                    }),
+                                        key: i,
+                                        className: `fas fa-star text-xs ${i < Math.floor(product.rating) ? 'text-yellow-400' : 'text-gray-600'}`
+                                    })
+                                )
+                            ),
+                            React.createElement('span', {
+                                className: 'text-xs text-gray-400 ml-1'
+                            }, product.rating)
+                        )
+                    ),
+                    React.createElement('h3', {
+                        className: 'text-lg font-bold mb-2 text-white group-hover:text-purple-300 transition-colors duration-300'
+                    }, product.name),
+                    React.createElement('p', {
+                        className: 'text-gray-400 text-sm mb-4 line-clamp-2'
+                    }, product.description),
+                    
+                    // Tags
+                    product.tags && React.createElement('div', {
+                        className: 'flex flex-wrap gap-1 mb-4'
+                    },
+                        product.tags.slice(0, 3).map(tag =>
+                            React.createElement('span', {
+                                key: tag,
+                                className: 'px-2 py-1 bg-gray-700 text-xs rounded-lg text-gray-300'
+                            }, tag)
+                        )
+                    ),
+                    
+                    React.createElement('div', {
+                        className: 'flex space-x-2'
+                    },
+                        React.createElement('button', {
+                            onClick: handleAddToCart,
+                            disabled: isAdding || product.stock === 0,
+                            className: `flex-1 ${
+                                product.stock === 0 
+                                    ? 'bg-gray-600 cursor-not-allowed' 
+                                    : 'bg-purple-600 hover:bg-purple-700 btn-glow'
+                            } text-white py-3 px-4 rounded-xl transition-all duration-300 flex items-center justify-center font-medium shadow-lg disabled:opacity-50`
+                        },
+                            isAdding 
+                                ? React.createElement('i', { className: 'fas fa-spinner loading-spinner' })
+                                : product.stock === 0
+                                ? React.createElement(React.Fragment, null,
+                                    React.createElement('i', { className: 'fas fa-times mr-2' }),
+                                    'Out of Stock'
+                                )
+                                : React.createElement(React.Fragment, null,
+                                    React.createElement('i', { className: 'fas fa-plus mr-2' }),
                                     'Add to Cart'
                                 )
-                            )
+                        ),
+                        React.createElement('button', {
+                            onClick: handleQuickBuy,
+                            disabled: product.stock === 0,
+                            title: 'Quick Buy',
+                            className: `${
+                                product.stock === 0 
+                                    ? 'bg-gray-600 cursor-not-allowed' 
+                                    : 'bg-green-600 hover:bg-green-700'
+                            } text-white py-3 px-4 rounded-xl transition-all duration-300 flex items-center justify-center shadow-lg hover-lift disabled:opacity-50`
+                        },
+                            React.createElement('i', { className: 'fas fa-bolt' })
                         )
                     )
                 )
             );
         }
 
-        // Simple Cart Sidebar
+        // Enhanced Products Grid Component
+        function ProductsGrid() {
+            const [products, setProducts] = React.useState([]);
+            const [searchTerm, setSearchTerm] = React.useState('');
+            const [selectedCategory, setSelectedCategory] = React.useState('All');
+            const [loading, setLoading] = React.useState(true);
+            const [sortBy, setSortBy] = React.useState('popular');
+
+            React.useEffect(() => {
+                const loadProducts = async () => {
+                    try {
+                        const productsData = await apiService.getProducts();
+                        setProducts(productsData);
+                    } catch (error) {
+                        console.error('Failed to load products:', error);
+                        setProducts(PRODUCTS);
+                    } finally {
+                        setLoading(false);
+                    }
+                };
+                loadProducts();
+            }, []);
+
+            const categories = ['All', ...new Set(products.map(p => p.category))];
+
+            const filteredProducts = products.filter(product => {
+                const matchesSearch = product.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                                    product.description.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                                    product.tags?.some(tag => tag.toLowerCase().includes(searchTerm.toLowerCase()));
+                const matchesCategory = selectedCategory === 'All' || product.category === selectedCategory;
+                return matchesSearch && matchesCategory;
+            }).sort((a, b) => {
+                switch (sortBy) {
+                    case 'price-low': return a.price - b.price;
+                    case 'price-high': return b.price - a.price;
+                    case 'rating': return (b.rating || 0) - (a.rating || 0);
+                    case 'popular': return (b.popular ? 1 : 0) - (a.popular ? 1 : 0);
+                    default: return 0;
+                }
+            });
+
+            if (loading) {
+                return React.createElement('div', {
+                    className: 'container mx-auto px-4 py-8'
+                },
+                    React.createElement('div', {
+                        className: 'grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6'
+                    },
+                        [...Array(6)].map((_, i) =>
+                            React.createElement('div', {
+                                key: i,
+                                className: 'bg-gray-800 rounded-2xl overflow-hidden animate-pulse'
+                            },
+                                React.createElement('div', {
+                                    className: 'w-full h-56 bg-gray-700'
+                                }),
+                                React.createElement('div', {
+                                    className: 'p-5'
+                                },
+                                    React.createElement('div', {
+                                        className: 'h-4 bg-gray-700 rounded mb-3 w-1/3'
+                                    }),
+                                    React.createElement('div', {
+                                        className: 'h-6 bg-gray-700 rounded mb-3'
+                                    }),
+                                    React.createElement('div', {
+                                        className: 'h-4 bg-gray-700 rounded mb-4 w-2/3'
+                                    }),
+                                    React.createElement('div', {
+                                        className: 'h-12 bg-gray-700 rounded'
+                                    })
+                                )
+                            )
+                        )
+                    )
+                );
+            }
+
+            return React.createElement('div', {
+                className: 'container mx-auto px-4 py-8'
+            },
+                // Enhanced Hero Section
+                React.createElement('div', {
+                    className: 'text-center mb-12 hero-pattern rounded-3xl p-8 relative overflow-hidden'
+                },
+                    React.createElement('div', {
+                        className: 'relative z-10'
+                    },
+                        React.createElement('h2', {
+                            className: 'text-5xl font-bold mb-4 text-gradient'
+                        }, 'Quick Night Delivery'),
+                        React.createElement('p', {
+                            className: 'text-xl text-gray-300 mb-3 font-medium'
+                        }, 'Get essentials delivered in 30-45 minutes'),
+                        React.createElement('div', {
+                            className: 'flex items-center justify-center space-x-6 text-purple-300 font-medium'
+                        },
+                            React.createElement('div', {
+                                className: 'flex items-center space-x-2'
+                            },
+                                React.createElement('i', { className: 'fas fa-map-marker-alt' }),
+                                React.createElement('span', null, 'Leipzig')
+                            ),
+                            React.createElement('div', {
+                                className: 'flex items-center space-x-2'
+                            },
+                                React.createElement('i', { className: 'fas fa-clock' }),
+                                React.createElement('span', null, '20:00-02:00')
+                            ),
+                            React.createElement('div', {
+                                className: 'flex items-center space-x-2'
+                            },
+                                React.createElement('i', { className: 'fas fa-truck' }),
+                                React.createElement('span', null, '€2.50 delivery')
+                            )
+                        )
+                    )
+                ),
+
+                // Enhanced Search and Filters
+                React.createElement('div', {
+                    className: 'mb-8 space-y-6'
+                },
+                    // Search Bar
+                    React.createElement('div', {
+                        className: 'relative max-w-2xl mx-auto'
+                    },
+                        React.createElement('input', {
+                            type: 'text',
+                            placeholder: 'Search products, categories, or tags...',
+                            value: searchTerm,
+                            onChange: (e) => setSearchTerm(e.target.value),
+                            className: 'w-full bg-gray-800 text-white px-6 py-4 pl-14 rounded-2xl focus:outline-none focus:ring-4 focus:ring-purple-600/30 border border-gray-700 focus:border-purple-500 transition-all duration-300 text-lg search-glow'
+                        }),
+                        React.createElement('i', {
+                            className: 'fas fa-search absolute left-5 top-1/2 transform -translate-y-1/2 text-gray-400 text-lg'
+                        }),
+                        searchTerm && React.createElement('button', {
+                            onClick: () => setSearchTerm(''),
+                            className: 'absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-white transition-colors duration-300'
+                        },
+                            React.createElement('i', { className: 'fas fa-times' })
+                        )
+                    ),
+
+                    // Category Pills and Sort
+                    React.createElement('div', {
+                        className: 'flex flex-col lg:flex-row items-center justify-between space-y-4 lg:space-y-0'
+                    },
+                        // Categories
+                        React.createElement('div', {
+                            className: 'flex flex-wrap justify-center gap-3'
+                        },
+                            categories.map(category =>
+                                React.createElement('button', {
+                                    key: category,
+                                    onClick: () => setSelectedCategory(category),
+                                    className: `category-pill px-6 py-3 rounded-xl font-medium transition-all duration-300 ${
+                                        selectedCategory === category
+                                            ? 'bg-purple-600 text-white shadow-lg btn-glow'
+                                            : 'bg-gray-800 text-gray-300 hover:bg-gray-700 border border-gray-700'
+                                    }`
+                                }, category)
+                            )
+                        ),
+                        
+                        // Sort Dropdown
+                        React.createElement('select', {
+                            value: sortBy,
+                            onChange: (e) => setSortBy(e.target.value),
+                            className: 'bg-gray-800 text-white px-4 py-3 rounded-xl border border-gray-700 focus:outline-none focus:ring-2 focus:ring-purple-600 font-medium'
+                        },
+                            React.createElement('option', { value: 'popular' }, '🔥 Most Popular'),
+                            React.createElement('option', { value: 'price-low' }, '💰 Price: Low to High'),
+                            React.createElement('option', { value: 'price-high' }, '💎 Price: High to Low'),
+                            React.createElement('option', { value: 'rating' }, '⭐ Highest Rated')
+                        )
+                    )
+                ),
+
+                // Products Grid
+                React.createElement('div', {
+                    className: 'grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8'
+                },
+                    filteredProducts.map(product =>
+                        React.createElement(ProductCard, {
+                            key: product.id,
+                            product: product
+                        })
+                    )
+                ),
+
+                // Empty State
+                filteredProducts.length === 0 && React.createElement('div', {
+                    className: 'text-center py-20'
+                },
+                    React.createElement('div', {
+                        className: 'mb-6'
+                    },
+                        React.createElement('i', {
+                            className: 'fas fa-search text-6xl text-gray-600 mb-4'
+                        })
+                    ),
+                    React.createElement('h3', {
+                        className: 'text-2xl font-bold text-gray-400 mb-3'
+                    }, 'No products found'),
+                    React.createElement('p', {
+                        className: 'text-gray-500 mb-6'
+                    }, 'Try adjusting your search or filter criteria'),
+                    React.createElement('button', {
+                        onClick: () => {
+                            setSearchTerm('');
+                            setSelectedCategory('All');
+                        },
+                        className: 'bg-purple-600 hover:bg-purple-700 text-white px-6 py-3 rounded-xl font-medium transition-all duration-300 btn-glow'
+                    }, 'Clear Filters')
+                )
+            );
+        }
+
+        // Enhanced Cart Sidebar Component
         function CartSidebar() {
-            const { isCartOpen, setIsCartOpen, cartItems, getCartTotal, clearCart } = React.useContext(CartContext);
+            const {
+                isCartOpen,
+                setIsCartOpen,
+                cartItems,
+                updateQuantity,
+                removeFromCart,
+                getCartTotal,
+                getTotalWithDelivery,
+                clearCart
+            } = React.useContext(CartContext);
+
+            const [showCheckout, setShowCheckout] = React.useState(false);
+
+            React.useEffect(() => {
+                const handleOpenCheckout = () => setShowCheckout(true);
+                window.addEventListener('openCheckout', handleOpenCheckout);
+                return () => window.removeEventListener('openCheckout', handleOpenCheckout);
+            }, []);
 
             if (!isCartOpen) return null;
 
-            return React.createElement('div', {
-                className: 'fixed inset-0 bg-black bg-opacity-50 z-50 flex justify-end',
-                onClick: () => setIsCartOpen(false)
-            },
+            return React.createElement(React.Fragment, null,
+                // Backdrop
                 React.createElement('div', {
-                    className: 'w-96 bg-gray-800 h-full p-6 overflow-y-auto',
-                    onClick: (e) => e.stopPropagation()
+                    className: 'fixed inset-0 bg-black/60 backdrop-blur-sm z-50 transition-opacity duration-300',
+                    onClick: () => setIsCartOpen(false)
+                }),
+                
+                // Cart Sidebar
+                React.createElement('div', {
+                    className: 'fixed right-0 top-0 h-full w-full max-w-md bg-gray-800 shadow-2xl z-50 slide-in-right border-l border-gray-700'
                 },
+                    // Header
                     React.createElement('div', {
-                        className: 'flex justify-between items-center mb-6'
+                        className: 'p-6 border-b border-gray-700 bg-gradient-to-r from-purple-600 to-purple-700'
                     },
-                        React.createElement('h2', {
-                            className: 'text-xl font-bold'
-                        }, 'Shopping Cart'),
-                        React.createElement('button', {
-                            onClick: () => setIsCartOpen(false),
-                            className: 'text-gray-400 hover:text-white'
+                        React.createElement('div', {
+                            className: 'flex items-center justify-between'
                         },
-                            React.createElement('i', {
-                                className: 'fas fa-times text-xl'
-                            })
+                            React.createElement('div', null,
+                                React.createElement('h2', {
+                                    className: 'text-xl font-bold text-white'
+                                }, 'Shopping Cart'),
+                                React.createElement('p', {
+                                    className: 'text-purple-200 text-sm'
+                                }, `${cartItems.length} item${cartItems.length !== 1 ? 's' : ''}`)
+                            ),
+                            React.createElement('button', {
+                                onClick: () => setIsCartOpen(false),
+                                className: 'text-purple-200 hover:text-white transition-colors duration-300 p-2 hover:bg-white/10 rounded-lg'
+                            },
+                                React.createElement('i', {
+                                    className: 'fas fa-times text-xl'
+                                })
+                            )
                         )
                     ),
-                    cartItems.length === 0 
-                        ? React.createElement('p', {
-                            className: 'text-gray-400 text-center py-20'
-                        }, 'Your cart is empty')
-                        : React.createElement('div', null,
-                            React.createElement('div', {
-                                className: 'space-y-4 mb-6'
+
+                    // Cart Items
+                    React.createElement('div', {
+                        className: 'flex-1 overflow-y-auto p-6 space-y-4 custom-scrollbar max-h-96'
+                    },
+                        cartItems.length === 0 
+                            ? React.createElement('div', {
+                                className: 'text-center py-20'
                             },
-                                cartItems.map(item =>
+                                React.createElement('i', {
+                                    className: 'fas fa-shopping-cart text-6xl text-gray-600 mb-4'
+                                }),
+                                React.createElement('h3', {
+                                    className: 'text-lg font-semibold text-gray-400 mb-2'
+                                }, 'Your cart is empty'),
+                                React.createElement('p', {
+                                    className: 'text-gray-500 mb-6'
+                                }, 'Add some delicious items to get started'),
+                                React.createElement('button', {
+                                    onClick: () => setIsCartOpen(false),
+                                    className: 'bg-purple-600 hover:bg-purple-700 text-white px-6 py-3 rounded-xl font-medium transition-all duration-300 btn-glow'
+                                }, 'Start Shopping')
+                            )
+                            : cartItems.map(item =>
+                                React.createElement('div', {
+                                    key: item.id,
+                                    className: 'cart-item-enter bg-gray-700 rounded-xl p-4 border border-gray-600 hover:border-purple-500/50 transition-all duration-300'
+                                },
                                     React.createElement('div', {
-                                        key: item.id,
-                                        className: 'flex items-center space-x-4 bg-gray-700 p-3 rounded-lg'
+                                        className: 'flex items-center space-x-4'
                                     },
                                         React.createElement('img', {
                                             src: item.image,
                                             alt: item.name,
-                                            className: 'w-12 h-12 object-cover rounded'
+                                            className: 'w-16 h-16 object-cover rounded-lg flex-shrink-0'
                                         }),
                                         React.createElement('div', {
-                                            className: 'flex-1'
+                                            className: 'flex-1 min-w-0'
                                         },
                                             React.createElement('h4', {
-                                                className: 'font-semibold'
+                                                className: 'font-semibold text-white truncate'
                                             }, item.name),
                                             React.createElement('p', {
-                                                className: 'text-purple-400'
-                                            }, `€${item.price.toFixed(2)} x${item.quantity}`)
+                                                className: 'text-purple-400 font-medium'
+                                            }, `€${item.price.toFixed(2)}`),
+                                            React.createElement('p', {
+                                                className: 'text-sm text-gray-400'
+                                            }, `Total: €${(item.price * item.quantity).toFixed(2)}`)
+                                        ),
+                                        React.createElement('div', {
+                                            className: 'flex flex-col items-center space-y-2'
+                                        },
+                                            React.createElement('div', {
+                                                className: 'flex items-center space-x-2'
+                                            },
+                                                React.createElement('button', {
+                                                    onClick: () => updateQuantity(item.id, item.quantity - 1),
+                                                    className: 'quantity-btn w-8 h-8 bg-purple-600 rounded-full flex items-center justify-center hover:bg-purple-700 text-white font-bold'
+                                                },
+                                                    React.createElement('i', {
+                                                        className: 'fas fa-minus text-xs'
+                                                    })
+                                                ),
+                                                React.createElement('span', {
+                                                    className: 'w-8 text-center font-bold text-white'
+                                                }, item.quantity),
+                                                React.createElement('button', {
+                                                    onClick: () => updateQuantity(item.id, item.quantity + 1),
+                                                    className: 'quantity-btn w-8 h-8 bg-purple-600 rounded-full flex items-center justify-center hover:bg-purple-700 text-white font-bold'
+                                                },
+                                                    React.createElement('i', {
+                                                        className: 'fas fa-plus text-xs'
+                                                    })
+                                                )
+                                            ),
+                                            React.createElement('button', {
+                                                onClick: () => removeFromCart(item.id),
+                                                className: 'text-red-400 hover:text-red-300 transition-colors duration-300 p-1'
+                                            },
+                                                React.createElement('i', {
+                                                    className: 'fas fa-trash text-sm'
+                                                })
+                                            )
                                         )
+                                    )
+                                )
+                            )
+                    ),
+
+                    // Cart Summary and Actions
+                    cartItems.length > 0 && React.createElement('div', {
+                        className: 'p-6 border-t border-gray-700 bg-gray-800/50 backdrop-blur-sm'
+                    },
+                        // Order Summary
+                        React.createElement('div', {
+                            className: 'space-y-3 mb-6'
+                        },
+                            React.createElement('div', {
+                                className: 'flex justify-between text-gray-300'
+                            },
+                                React.createElement('span', null, 'Subtotal:'),
+                                React.createElement('span', {
+                                    className: 'font-semibold'
+                                }, `€${getCartTotal().toFixed(2)}`)
+                            ),
+                            React.createElement('div', {
+                                className: 'flex justify-between text-gray-300'
+                            },
+                                React.createElement('span', null, 'Delivery Fee:'),
+                                React.createElement('span', {
+                                    className: 'font-semibold'
+                                }, '€2.50')
+                            ),
+                            React.createElement('div', {
+                                className: 'border-t border-gray-600 pt-3'
+                            }),
+                            React.createElement('div', {
+                                className: 'flex justify-between items-center'
+                            },
+                                React.createElement('span', {
+                                    className: 'text-lg font-bold text-white'
+                                }, 'Total:'),
+                                React.createElement('span', {
+                                    className: 'text-2xl font-bold text-purple-400'
+                                }, `€${getTotalWithDelivery().toFixed(2)}`)
+                            )
+                        ),
+
+                        // Action Buttons
+                        React.createElement('div', {
+                            className: 'space-y-3'
+                        },
+                            React.createElement('button', {
+                                onClick: () => setShowCheckout(true),
+                                className: 'w-full bg-gradient-to-r from-purple-600 to-purple-700 hover:from-purple-700 hover:to-purple-800 text-white py-4 rounded-xl font-bold text-lg transition-all duration-300 btn-glow shadow-lg'
+                            },
+                                React.createElement('i', {
+                                    className: 'fas fa-credit-card mr-2'
+                                }),
+                                'Proceed to Checkout'
+                            ),
+                            React.createElement('button', {
+                                onClick: clearCart,
+                                className: 'w-full bg-gray-600 hover:bg-gray-700 text-white py-3 rounded-xl font-medium transition-all duration-300'
+                            },
+                                React.createElement('i', {
+                                    className: 'fas fa-trash mr-2'
+                                }),
+                                'Clear Cart'
+                            )
+                        )
+                    )
+                ),
+
+                // Checkout Modal
+                showCheckout && React.createElement(CheckoutModal, {
+                    onClose: () => setShowCheckout(false),
+                    cartItems: cartItems,
+                    total: getCartTotal(),
+                    totalWithDelivery: getTotalWithDelivery()
+                })
+            );
+        }
+
+        // Enhanced Checkout Modal Component
+        function CheckoutModal({ onClose, cartItems, total, totalWithDelivery }) {
+            const { clearCart, setIsCartOpen } = React.useContext(CartContext);
+            const [loading, setLoading] = React.useState(false);
+            const [currentStep, setCurrentStep] = React.useState(1);
+            const [customerInfo, setCustomerInfo] = React.useState({
+                name: '',
+                phone: '',
+                address: '',
+                notes: ''
+            });
+            const [paymentMethod, setPaymentMethod] = React.useState('cash');
+
+            const handleSubmit = async (e) => {
+                e.preventDefault();
+                setLoading(true);
+
+                try {
+                    const orderData = {
+                        items: cartItems,
+                        total,
+                        customerInfo,
+                        paymentMethod,
+                        deliveryFee: 2.50
+                    };
+
+                    const result = await apiService.createOrder(orderData);
+                    
+                    if (result.success) {
+                        showNotification(
+                            `🎉 Order placed successfully! Order ID: ${result.orderId}. Expected delivery: 30-45 minutes.`,
+                            'success',
+                            5000
+                        );
+                        clearCart();
+                        setIsCartOpen(false);
+                        onClose();
+                    } else {
+                        throw new Error(result.error);
+                    }
+                } catch (error) {
+                    showNotification('❌ Order failed: ' + error.message, 'error', 5000);
+                } finally {
+                    setLoading(false);
+                }
+            };
+
+            const nextStep = () => {
+                if (currentStep < 3) setCurrentStep(currentStep + 1);
+            };
+
+            const prevStep = () => {
+                if (currentStep > 1) setCurrentStep(currentStep - 1);
+            };
+
+            return React.createElement('div', {
+                className: 'fixed inset-0 bg-black/70 backdrop-blur-sm z-60 flex items-center justify-center p-4'
+            },
+                React.createElement('div', {
+                    className: 'bg-gray-800 rounded-2xl max-w-2xl w-full max-h-[90vh] overflow-hidden border border-gray-700 shadow-2xl'
+                },
+                    // Header
+                    React.createElement('div', {
+                        className: 'p-6 border-b border-gray-700 bg-gradient-to-r from-purple-600 to-purple-700'
+                    },
+                        React.createElement('div', {
+                            className: 'flex items-center justify-between'
+                        },
+                            React.createElement('div', null,
+                                React.createElement('h2', {
+                                    className: 'text-2xl font-bold text-white'
+                                }, 'Checkout'),
+                                React.createElement('p', {
+                                    className: 'text-purple-200'
+                                }, `Step ${currentStep} of 3`)
+                            ),
+                            React.createElement('button', {
+                                onClick: onClose,
+                                className: 'text-purple-200 hover:text-white transition-colors duration-300 p-2 hover:bg-white/10 rounded-lg'
+                            },
+                                React.createElement('i', {
+                                    className: 'fas fa-times text-xl'
+                                })
+                            )
+                        ),
+                        // Progress bar
+                        React.createElement('div', {
+                            className: 'mt-4'
+                        },
+                            React.createElement('div', {
+                                className: 'flex justify-between mb-2'
+                            },
+                                ['Order Review', 'Delivery Info', 'Payment'].map((step, index) =>
+                                    React.createElement('span', {
+                                        key: step,
+                                        className: `text-sm ${index + 1 <= currentStep ? 'text-white' : 'text-purple-300'}`
+                                    }, step)
+                                )
+                            ),
+                            React.createElement('div', {
+                                className: 'w-full bg-purple-800 rounded-full h-2'
+                            },
+                                React.createElement('div', {
+                                    className: 'bg-white h-2 rounded-full transition-all duration-500',
+                                    style: { width: `${(currentStep / 3) * 100}%` }
+                                })
+                            )
+                        )
+                    ),
+
+                    // Content
+                    React.createElement('div', {
+                        className: 'p-6 overflow-y-auto custom-scrollbar max-h-96'
+                    },
+                        currentStep === 1 && React.createElement('div', null,
+                            React.createElement('h3', {
+                                className: 'text-lg font-semibold mb-4 text-white'
+                            }, 'Order Summary'),
+                            React.createElement('div', {
+                                className: 'space-y-3 mb-6'
+                            },
+                                cartItems.map(item =>
+                                    React.createElement('div', {
+                                        key: item.id,
+                                        className: 'flex justify-between items-center py-2 border-b border-gray-700'
+                                    },
+                                        React.createElement('div', {
+                                            className: 'flex items-center space-x-3'
+                                        },
+                                            React.createElement('img', {
+                                                src: item.image,
+                                                alt: item.name,
+                                                className: 'w-12 h-12 object-cover rounded-lg'
+                                            }),
+                                            React.createElement('div', null,
+                                                React.createElement('span', {
+                                                    className: 'font-medium text-white'
+                                                }, `${item.name} x${item.quantity}`),
+                                                React.createElement('p', {
+                                                    className: 'text-sm text-gray-400'
+                                                }, `€${item.price.toFixed(2)} each`)
+                                            )
+                                        ),
+                                        React.createElement('span', {
+                                            className: 'font-semibold text-purple-400'
+                                        }, `€${(item.price * item.quantity).toFixed(2)}`)
                                     )
                                 )
                             ),
                             React.createElement('div', {
-                                className: 'border-t border-gray-700 pt-4'
+                                className: 'space-y-2 text-gray-300'
                             },
                                 React.createElement('div', {
-                                    className: 'flex justify-between items-center mb-4'
+                                    className: 'flex justify-between'
+                                },
+                                    React.createElement('span', null, 'Subtotal:'),
+                                    React.createElement('span', null, `€${total.toFixed(2)}`)
+                                ),
+                                React.createElement('div', {
+                                    className: 'flex justify-between'
+                                },
+                                    React.createElement('span', null, 'Delivery Fee:'),
+                                    React.createElement('span', null, '€2.50')
+                                ),
+                                React.createElement('div', {
+                                    className: 'flex justify-between font-bold text-lg border-t border-gray-600 pt-2'
                                 },
                                     React.createElement('span', {
-                                        className: 'text-lg font-semibold'
+                                        className: 'text-white'
                                     }, 'Total:'),
                                     React.createElement('span', {
-                                        className: 'text-2xl font-bold text-purple-400'
-                                    }, `€${getCartTotal().toFixed(2)}`)
+                                        className: 'text-purple-400'
+                                    }, `€${totalWithDelivery.toFixed(2)}`)
+                                )
+                            )
+                        ),
+
+                        currentStep === 2 && React.createElement('div', null,
+                            React.createElement('h3', {
+                                className: 'text-lg font-semibold mb-4 text-white'
+                            }, 'Delivery Information'),
+                            React.createElement('div', {
+                                className: 'grid grid-cols-1 md:grid-cols-2 gap-4'
+                            },
+                                React.createElement('div', null,
+                                    React.createElement('label', {
+                                        className: 'block text-sm font-medium mb-2 text-gray-300'
+                                    }, 'Full Name *'),
+                                    React.createElement('input', {
+                                        type: 'text',
+                                        required: true,
+                                        value: customerInfo.name,
+                                        onChange: (e) => setCustomerInfo(prev => ({...prev, name: e.target.value})),
+                                        className: 'w-full bg-gray-700 text-white px-4 py-3 rounded-xl focus:outline-none focus:ring-2 focus:ring-purple-600 border border-gray-600',
+                                        placeholder: 'Your full name'
+                                    })
                                 ),
-                                React.createElement('button', {
-                                    onClick: () => {
-                                        // Simple checkout - just test the order system
-                                        const testOrder = {
-                                            items: cartItems,
-                                            total: getCartTotal(),
-                                            customerInfo: {
-                                                name: 'Test Customer',
-                                                phone: '+49 123 456 789',
-                                                address: 'Test Address, Leipzig',
-                                                notes: 'Test order from website'
-                                            },
-                                            paymentMethod: 'cash',
-                                            deliveryFee: 2.50
-                                        };
-                                        
-                                        apiService.createOrder(testOrder).then(result => {
-                                            if (result.success) {
-                                                alert(`✅ Test order placed! Order ID: ${result.orderId}\n\nCheck your Telegram for notification!`);
-                                                clearCart();
-                                                setIsCartOpen(false);
-                                            } else {
-                                                alert('❌ Order failed: ' + result.error);
-                                            }
-                                        });
+                                React.createElement('div', null,
+                                    React.createElement('label', {
+                                        className: 'block text-sm font-medium mb-2 text-gray-300'
+                                    }, 'Phone Number *'),
+                                    React.createElement('input', {
+                                        type: 'tel',
+                                        required: true,
+                                        value: customerInfo.phone,
+                                        onChange: (e) => setCustomerInfo(prev => ({...prev, phone: e.target.value})),
+                                        className: 'w-full bg-gray-700 text-white px-4 py-3 rounded-xl focus:outline-none focus:ring-2 focus:ring-purple-600 border border-gray-600',
+                                        placeholder: '+49 xxx xxx xxxx'
+                                    })
+                                ),
+                                React.createElement('div', {
+                                    className: 'md:col-span-2'
+                                },
+                                    React.createElement('label', {
+                                        className: 'block text-sm font-medium mb-2 text-gray-300'
+                                    }, 'Delivery Address *'),
+                                    React.createElement('textarea', {
+                                        required: true,
+                                        rows: 3,
+                                        value: customerInfo.address,
+                                        onChange: (e) => setCustomerInfo(prev => ({...prev, address: e.target.value})),
+                                        className: 'w-full bg-gray-700 text-white px-4 py-3 rounded-xl focus:outline-none focus:ring-2 focus:ring-purple-600 border border-gray-600',
+                                        placeholder: 'Street address, apartment number, Leipzig'
+                                    })
+                                ),
+                                React.createElement('div', {
+                                    className: 'md:col-span-2'
+                                },
+                                    React.createElement('label', {
+                                        className: 'block text-sm font-medium mb-2 text-gray-300'
+                                    }, 'Special Notes'),
+                                    React.createElement('textarea', {
+                                        rows: 2,
+                                        value: customerInfo.notes,
+                                        onChange: (e) => setCustomerInfo(prev => ({...prev, notes: e.target.value})),
+                                        className: 'w-full bg-gray-700 text-white px-4 py-3 rounded-xl focus:outline-none focus:ring-2 focus:ring-purple-600 border border-gray-600',
+                                        placeholder: 'Any special delivery instructions...'
+                                    })
+                                )
+                            )
+                        ),
+
+                        currentStep === 3 && React.createElement('div', null,
+                            React.createElement('h3', {
+                                className: 'text-lg font-semibold mb-4 text-white'
+                            }, 'Payment Method'),
+                            React.createElement('div', {
+                                className: 'space-y-4 mb-6'
+                            },
+                                React.createElement('label', {
+                                    className: 'flex items-center space-x-4 p-4 border border-gray-600 rounded-xl cursor-pointer hover:border-purple-500 transition-colors duration-300'
+                                },
+                                    React.createElement('input', {
+                                        type: 'radio',
+                                        name: 'payment',
+                                        value: 'cash',
+                                        checked: paymentMethod === 'cash',
+                                        onChange: (e) => setPaymentMethod(e.target.value),
+                                        className: 'w-4 h-4 text-purple-600'
+                                    }),
+                                    React.createElement('div', {
+                                        className: 'flex items-center space-x-3'
                                     },
-                                    className: 'w-full bg-purple-600 hover:bg-purple-700 text-white py-3 rounded-lg transition-all duration-300 mb-2'
-                                }, 'Test Order (Demo)'),
-                                React.createElement('button', {
-                                    onClick: clearCart,
-                                    className: 'w-full bg-gray-600 hover:bg-gray-700 text-white py-2 rounded-lg transition-all duration-300'
-                                }, 'Clear Cart')
+                                        React.createElement('i', {
+                                            className: 'fas fa-money-bill-wave text-green-400 text-xl'
+                                        }),
+                                        React.createElement('div', null,
+                                            React.createElement('span', {
+                                                className: 'font-medium text-white'
+                                            }, 'Cash on Delivery'),
+                                            React.createElement('p', {
+                                                className: 'text-sm text-gray-400'
+                                            }, 'Pay when your order arrives')
+                                        )
+                                    )
+                                ),
+                                React.createElement('label', {
+                                    className: 'flex items-center space-x-4 p-4 border border-gray-600 rounded-xl cursor-pointer hover:border-purple-500 transition-colors duration-300'
+                                },
+                                    React.createElement('input', {
+                                        type: 'radio',
+                                        name: 'payment',
+                                        value: 'card',
+                                        checked: paymentMethod === 'card',
+                                        onChange: (e) => setPaymentMethod(e.target.value),
+                                        className: 'w-4 h-4 text-purple-600'
+                                    }),
+                                    React.createElement('div', {
+                                        className: 'flex items-center space-x-3'
+                                    },
+                                        React.createElement('i', {
+                                            className: 'fas fa-credit-card text-blue-400 text-xl'
+                                        }),
+                                        React.createElement('div', null,
+                                            React.createElement('span', {
+                                                className: 'font-medium text-white'
+                                            }, 'Credit/Debit Card'),
+                                            React.createElement('p', {
+                                                className: 'text-sm text-gray-400'
+                                            }, 'Pay securely with your card')
+                                        )
+                                    )
+                                )
+                            ),
+
+                            // Delivery Time Estimate
+                            React.createElement('div', {
+                                className: 'bg-purple-900/30 border border-purple-600/30 p-4 rounded-xl'
+                            },
+                                React.createElement('div', {
+                                    className: 'flex items-center space-x-3 mb-2'
+                                },
+                                    React.createElement('i', {
+                                        className: 'fas fa-clock text-purple-400'
+                                    }),
+                                    React.createElement('span', {
+                                        className: 'font-semibold text-white'
+                                    }, 'Estimated Delivery Time')
+                                ),
+                                React.createElement('p', {
+                                    className: 'text-purple-200 font-medium'
+                                }, '30-45 minutes'),
+                                React.createElement('p', {
+                                    className: 'text-sm text-gray-400 mt-1'
+                                }, 'Night delivery available until 2:00 AM')
                             )
                         )
+                    ),
+
+                    // Footer Actions
+                    React.createElement('div', {
+                        className: 'p-6 border-t border-gray-700 bg-gray-800/50'
+                    },
+                        React.createElement('div', {
+                            className: 'flex space-x-3'
+                        },
+                            currentStep > 1 && React.createElement('button', {
+                                onClick: prevStep,
+                                className: 'flex-1 bg-gray-600 hover:bg-gray-700 text-white py-3 rounded-xl font-medium transition-all duration-300'
+                            }, 'Previous'),
+                            currentStep < 3 
+                                ? React.createElement('button', {
+                                    onClick: nextStep,
+                                    disabled: currentStep === 2 && (!customerInfo.name || !customerInfo.phone || !customerInfo.address),
+                                    className: 'flex-1 bg-purple-600 hover:bg-purple-700 disabled:bg-gray-600 disabled:cursor-not-allowed text-white py-3 rounded-xl font-medium transition-all duration-300 btn-glow'
+                                }, 'Next')
+                                : React.createElement('button', {
+                                    onClick: handleSubmit,
+                                    disabled: loading,
+                                    className: 'flex-1 bg-gradient-to-r from-green-600 to-green-700 hover:from-green-700 hover:to-green-800 disabled:from-gray-600 disabled:to-gray-700 text-white py-3 rounded-xl font-bold transition-all duration-300 flex items-center justify-center btn-glow'
+                                },
+                                    loading 
+                                        ? React.createElement(React.Fragment, null,
+                                            React.createElement('i', {
+                                                className: 'fas fa-spinner loading-spinner mr-2'
+                                            }),
+                                            'Processing...'
+                                        )
+                                        : React.createElement(React.Fragment, null,
+                                            React.createElement('i', {
+                                                className: 'fas fa-check mr-2'
+                                            }),
+                                            'Place Order'
+                                        )
+                                )
+                        )
+                    )
+                )
+            );
+        }
+
+        // Enhanced Footer Component
+        function Footer() {
+            return React.createElement('footer', {
+                className: 'bg-gray-900 border-t border-gray-800 py-12 mt-16'
+            },
+                React.createElement('div', {
+                    className: 'container mx-auto px-4'
+                },
+                    React.createElement('div', {
+                        className: 'grid md:grid-cols-4 gap-8'
+                    },
+                        React.createElement('div', {
+                            className: 'md:col-span-2'
+                        },
+                            React.createElement('div', {
+                                className: 'flex items-center space-x-3 mb-4'
+                            },
+                                React.createElement('div', {
+                                    className: 'w-10 h-10 bg-purple-600 rounded-xl flex items-center justify-center'
+                                },
+                                    React.createElement('i', {
+                                        className: 'fas fa-shopping-bag text-white'
+                                    })
+                                ),
+                                React.createElement('h3', {
+                                    className: 'text-2xl font-bold text-white'
+                                }, 'Shoppy Leipzig')
+                            ),
+                            React.createElement('p', {
+                                className: 'text-gray-400 mb-6 max-w-md'
+                            }, 'Your trusted night delivery service bringing essentials to your door in Leipzig. Fast, reliable, and available when you need us most.'),
+                            React.createElement('div', {
+                                className: 'flex space-x-4'
+                            },
+                                ['telegram', 'instagram', 'facebook', 'twitter'].map(social =>
+                                    React.createElement('button', {
+                                        key: social,
+                                        className: 'w-10 h-10 bg-gray-800 hover:bg-purple-600 rounded-lg flex items-center justify-center transition-all duration-300 hover-lift'
+                                    },
+                                        React.createElement('i', {
+                                            className: `fab fa-${social} text-gray-400 hover:text-white`
+                                        })
+                                    )
+                                )
+                            )
+                        ),
+                        
+                        React.createElement('div', null,
+                            React.createElement('h4', {
+                                className: 'font-semibold mb-4 text-white'
+                            }, 'Service Hours'),
+                            React.createElement('div', {
+                                className: 'space-y-3 text-gray-400'
+                            },
+                                React.createElement('div', {
+                                    className: 'flex items-center space-x-3'
+                                },
+                                    React.createElement('i', { className: 'fas fa-clock w-4' }),
+                                    React.createElement('span', null, 'Monday - Sunday')
+                                ),
+                                React.createElement('div', {
+                                    className: 'flex items-center space-x-3'
+                                },
+                                    React.createElement('i', { className: 'fas fa-moon w-4' }),
+                                    React.createElement('span', null, '8:00 PM - 2:00 AM')
+                                ),
+                                React.createElement('div', {
+                                    className: 'flex items-center space-x-3'
+                                },
+                                    React.createElement('i', { className: 'fas fa-truck w-4' }),
+                                    React.createElement('span', null, 'Delivery: 30-45 min')
+                                ),
+                                React.createElement('div', {
+                                    className: 'flex items-center space-x-3'
+                                },
+                                    React.createElement('i', { className: 'fas fa-euro-sign w-4' }),
+                                    React.createElement('span', null, 'Fee: €2.50')
+                                )
+                            )
+                        ),
+                        
+                        React.createElement('div', null,
+                            React.createElement('h4', {
+                                className: 'font-semibold mb-4 text-white'
+                            }, 'Quick Links'),
+                            React.createElement('div', {
+                                className: 'space-y-3 text-gray-400'
+                            },
+                                ['About Us', 'Contact', 'Privacy Policy', 'Terms of Service'].map(link =>
+                                    React.createElement('button', {
+                                        key: link,
+                                        className: 'block hover:text-purple-400 transition-colors duration-300'
+                                    }, link)
+                                )
+                            )
+                        )
+                    ),
+                    
+                    React.createElement('div', {
+                        className: 'mt-8 pt-8 border-t border-gray-800 text-center'
+                    },
+                        React.createElement('p', {
+                            className: 'text-gray-400'
+                        }, '© 2025 Shoppy Leipzig. All rights reserved. Made with ❤️ for Leipzig.')
+                    )
                 )
             );
         }
@@ -670,7 +1849,7 @@ Ready to receive orders! 🛒`;
         // Main App Component
         function App() {
             React.useEffect(() => {
-                console.log('🛒 Shoppy Leipzig - Quick Night Delivery');
+                console.log('🛒 Shoppy Leipzig - Enhanced UX/UI Version');
                 console.log('📍 Service Area: Leipzig, Germany');
                 console.log('🕐 Hours: 20:00 - 02:00');
                 console.log('🚚 Delivery: 30-45 minutes');
@@ -683,18 +1862,13 @@ Ready to receive orders! 🛒`;
                     className: 'min-h-screen bg-gray-900'
                 },
                     React.createElement(Header),
+                    React.createElement(ServiceInfo),
                     React.createElement('main', {
                         className: 'min-h-screen'
                     },
                         React.createElement(ProductsGrid)
                     ),
-                    React.createElement('footer', {
-                        className: 'bg-gray-800 py-8 text-center'
-                    },
-                        React.createElement('p', {
-                            className: 'text-gray-400'
-                        }, '© 2025 Shoppy Leipzig. Made with ❤️ for Leipzig.')
-                    ),
+                    React.createElement(Footer),
                     React.createElement(CartSidebar)
                 )
             );
@@ -702,6 +1876,19 @@ Ready to receive orders! 🛒`;
 
         // Render the app
         ReactDOM.render(React.createElement(App), document.getElementById('root'));
+
+        // Service Worker Registration
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/sw.js')
+                    .then((registration) => {
+                        console.log('SW registered: ', registration);
+                    })
+                    .catch((registrationError) => {
+                        console.log('SW registration failed: ', registrationError);
+                    });
+            });
+        }
     </script>
 </body>
 </html>
